@@ -1,4 +1,6 @@
 import { Fragment, useState } from "react";
+import { Button,FormControl,TextField,Card,cardActionArea,CardActionArea,Typography} from '@mui/material';
+import {Fingerprint,AutoDelete,BrowserUpdated } from '@mui/icons-material';
 
 export default function Todo({ item ,onUpdate,onDelete}) {
   //Pongo el nombre con que pasaron la propiedad en este caso es Item
@@ -19,18 +21,29 @@ export default function Todo({ item ,onUpdate,onDelete}) {
 
     }
     return (
-      <form className="todoUpdate" onSubmit={handleSubmit}>
-        <input type="text" className="todoInput" onChange={handleChange} value={newValue}/>
-        <button className="buttonUpdate" onClick={handleUpdateTodo}>Update</button>
-      </form>
+
+        <FormControl className="todoUpdate" onSubmit={handleSubmit}>
+           <TextField className="todoInput" onChange={handleChange} value={newValue} placeholder="Update"></TextField>
+        <Button className="buttonUpdate" onClick={handleUpdateTodo}>Update<BrowserUpdated/></Button>
+        </FormControl>
+       
+   
+   
     );
   }
   function TodoElement() {
     return (
       <div className="todoInfo">
-        <h1>{item.title}</h1>
-        <button onClick={() => setEdit(true)}>Edit</button>
-        <button onClick={(e)=>onDelete()}>Delete</button>
+        <Card id="cardContainer">
+          <CardActionArea>
+          <Typography gutterBottom variant="h5">
+            {item.title}
+          </Typography>
+            
+            <Button onClick={(e) => onDelete()}><AutoDelete /> Delete</Button>
+            <Button onClick={(e) => setEdit(true)}>Edit<Fingerprint/></Button>
+          </CardActionArea>
+        </Card>
       </div>
     );
   }

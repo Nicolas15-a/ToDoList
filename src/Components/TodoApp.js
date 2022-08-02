@@ -1,5 +1,8 @@
 import React, { Fragment, useState } from "react";
 import Todo from "./Todo";
+import {Fingerprint } from '@mui/icons-material';
+import { Button, TextField} from '@mui/material';
+
 export default function TodoApp() {
   const [title, setTitle] = useState("");
   const [todos,setTodos]=useState(
@@ -7,10 +10,6 @@ export default function TodoApp() {
   )
 
 
-  const handleClick = (e) => {
-    e.preventDefault();
-    setTitle("new value");
-  };
   const handleState = (e) => {
     const value = e.target.value;
     setTitle(value);
@@ -30,41 +29,33 @@ export default function TodoApp() {
   }
   function handleUpdate(id,value){
     const temp=[...todos];
-    const item=temp.find(item=>item.id==id);
+    const item=temp.find(item=>item.id===id);
     item.title=value;
     setTodos(temp)
   }
   function handleDelete(id){
     const temp1=[...todos]
-    const temp=temp1.shift(item=>item.id==id);
+    const temp=temp1.shift(item=>item.id===id);
     setTodos(temp1)
   }
   return (
     <Fragment>
-      <h1>This is a TodoList</h1>
+      <h1 id="headerText">This is a TodoList</h1>
       <form className="containerForm" onSubmit={handleSubmit}>
-        <input
-          onChange={handleState}
-          className="todoItem"
-          value={title}
-        ></input>
-        <input
-          onClick={handleSubmit}
-          className="buttonCreate"
-          type="submit"
-          value="createButton"
-        ></input>
-        
+        <TextField className="todoInput"onChange={handleState}value={title} placeholder="New Item"></TextField>
+        <Button onClick={handleSubmit}id="buttonCreate" type="submit" >New</Button>
         <div>
-            <ol>
-              {todos.map((item)=>(
-                <Todo key={item.id}  item={item} onUpdate={handleUpdate} onDelete={handleDelete}/>
-              ))
-
-              }
-            </ol>
+          <ol>
+            {todos.map((item) => (
+              <Todo
+                key={item.id}
+                item={item}
+                onUpdate={handleUpdate}
+                onDelete={handleDelete}
+              />
+            ))}
+          </ol>
         </div>
-        
       </form>
     </Fragment>
   );
